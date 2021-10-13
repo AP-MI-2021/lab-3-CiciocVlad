@@ -53,14 +53,22 @@ def test_get_longest_average_below():
 
 
 def is_prime(n):
+    # :param n: integer
+    # :return: true if n is prime, false otherwise
     return not match(r'^1?$|^(11+?)\1+$', '1' * n)
+
+
+def test_is_prime():
+    assert is_prime(11)
+    assert not is_prime(4)
+    assert is_prime(13)
 
 
 def get_longest_concat_is_prime(lst):
     max_seq = []
     for left in range(len(lst)):
         for right in range(left, len(lst)):
-            if is_prime(int(''.join(map(lambda x: str(x), lst[left: right + 1])))):
+            if is_prime(int(''.join(map(str, lst[left: right + 1])))):
                 if len(max_seq) < right - left + 1:
                     max_seq = lst[left: right + 1]
     return max_seq
