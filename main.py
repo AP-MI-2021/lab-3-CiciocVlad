@@ -1,3 +1,6 @@
+from re import match
+
+
 def get_longest_sorted_asc(lst):
     # :param lst: list of numbers
     # :return: longest sequence of sorted numbers
@@ -49,6 +52,25 @@ def test_get_longest_average_below():
     assert get_longest_average_below([5, 10, 6, 4, 4, 4, 4], 4) == [4, 4, 4, 4]
 
 
+def is_prime(n):
+    return not match(r'^1?$|^(11+?)\1+$', '1' * n)
+
+
+def get_longest_concat_is_prime(lst):
+    max_seq = []
+    for left in range(len(lst)):
+        for right in range(left, len(lst)):
+            if is_prime(int(''.join(map(lambda x: str(x), lst[left: right + 1])))):
+                if len(max_seq) < right - left + 1:
+                    max_seq = lst[left: right + 1]
+    return max_seq
+
+
+def test_get_longest_concat_is_prime():
+    assert get_longest_concat_is_prime([1, 2, 3, 1]) == [1, 2, 3, 1]
+    assert get_longest_concat_is_prime([1, 1, 2]) == [1, 1]
+
+
 def menu():
     print('1. read list')
     print('2. get first prop')
@@ -57,8 +79,6 @@ def menu():
 
 
 def main():
-    test_get_longest_sorted_asc()
-    test_get_longest_average_below()
     menu()
     lst = []
     while (option := input('your option: ')) != '4':
@@ -74,4 +94,7 @@ def main():
 
 
 if __name__ == '__main__':
+    test_get_longest_sorted_asc()
+    test_get_longest_average_below()
+    test_get_longest_concat_is_prime()
     main()
